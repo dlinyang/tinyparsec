@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{clone, fmt};
 
 use crate::parsec::*;
 
@@ -101,15 +101,22 @@ impl<'a> Iterator for Text<'a> {
 }
 
 /// symbolic precedence process
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Op {
     pub symbol: String,
     pub precedence: u32,
+    pub associate: Assoc,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Assoc {
+    Left,
+    Right,
 }
 
 impl Op {
-    pub fn new(symbol: String, precedence: u32) -> Self {
-        Self { symbol, precedence }
+    pub fn new(symbol: impl Into<String>, precedence: u32, associate: Assoc) -> Self {
+        Self { symbol: symbol.into() , precedence, associate }
     }
 }
 
