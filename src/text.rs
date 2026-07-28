@@ -1,4 +1,4 @@
-use std::{clone, fmt};
+use std::fmt;
 
 use crate::parsec::*;
 
@@ -161,7 +161,7 @@ pub fn char_pc<'a>(c: char) -> impl ParsecT<Text<'a>, Token<char>> {
     char_fn_pc(move |x| x == c)
 }
 
-pub fn str_pc<'a>(s: &'a str) -> impl ParsecT<Text<'a>, Token<&'a str>> {
+pub fn str_pc<'a, 'b>(s: &'b str) -> impl ParsecT<Text<'a>, Token<&'a str>> {
     move |input: Text<'a>| {
         if input.starts_with(s) {
             Ok(input.split_as_token(s.len()))
