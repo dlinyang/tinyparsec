@@ -3,15 +3,15 @@ use std::result::Result;
 
 ///  ParseError trace error with string
 #[derive(Debug, Default)]
-pub struct ParseError {
-    pub errors: Vec<String>,
+pub struct ParseError<T = String> {
+    pub errors: Vec<T>,
 }
 
-impl ParseError {
+impl<T> ParseError<T> {
     #[inline]
-    pub fn new<T: ToString>(error: T) -> Self {
+    pub fn new(error: impl Into<T>) -> Self {
         Self {
-            errors: vec![error.to_string()],
+            errors: vec![error.into()],
         }
     }
 }
